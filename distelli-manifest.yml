@@ -1,4 +1,4 @@
-bmcgehee/example-node: 
+bmcgehee2/example-jenkins: 
   # Distelli Manifest example 
   
   PreBuild:     
@@ -10,20 +10,8 @@ bmcgehee/example-node:
     #- RepoPath: .
 
   Build:
-    # Enter your build steps here!
-    # use nvm (node version manager)
-
-    - source ~/.nvm/nvm.sh
-    # Install node v4.4.7
-    - nvm install v4.4.7
-    # install latest npm version globlaly 
-    - npm install npm -g   
-
-    #- echo "---Building---"   
-    - npm install 
-    #- echo "--Testing--"
-    - npm test
-   
+    # Built and tested with Jenkins
+       
   PkgInclude:
     - '*'
 
