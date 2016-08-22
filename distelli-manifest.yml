@@ -1,7 +1,7 @@
 bmcgehee2/example-jenkins: 
   # Distelli Manifest example 
   
-  PreBuild:     
+  PreBuild: 
     # Add any build pre-requisites here
     #- echo "---PreBuild---"
     
