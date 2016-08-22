@@ -1,0 +1,94 @@
+bmcgehee/example-node: 
+  # Distelli Manifest example 
+  
+  PreBuild:     
+    # Add any build pre-requisites here 
+    #- echo "---PreBuild---"
+    
+  #CommitData:
+    #- RepoType: Git   
+    #- RepoPath: .
+
+  Build:
+    # Enter your build steps here!
+    # use nvm (node version manager)
+
+    - source ~/.nvm/nvm.sh
+    # Install node v4.4.7
+    - nvm install v4.4.7
+    # install latest npm version globlaly
+    - npm install npm -g   
+
+    #- echo "---Building---"   
+    - npm install 
+    #- echo "--Testing--"
+    - npm test
+   
+  PkgInclude:
+    - '*'
+
+  ###Below is deployment phases   
+  
+  Env:
+    # Set any environment variables in this section.   
+    # These are available during all phases of a deploy.
+    - PORT: "3000"
+    - DISTELLI_INSTALLVIEW: "templates/notset.json"
+    - ELBNAME: "bmtest2"
+    - REGION: "eu-west-1"
+    - AWS_ACCESS_KEY_ID: "Set in Distelli"
+    - AWS_SECRET_ACCESS_KEY: "Set in Distelli"
+    - PATH: "/usr/local/bin:$PATH"
+    - test: "Testing"
+ 
+  InstallTemplates:
+    - "views/index.jade"
+    - ["deregister-elb.sh","."]
+    - ["register-elb.sh","."]
+
+  PreInstall:  
+    # Use this section to install any deployment pre-requisites.
+    - echo "---PreInstall---"
+    - echo "This is an addition"
+    - echo "--Installing deploy dependencies--"
+    - echo "-Updating apt-get-"
+    - sudo apt-get -y clean
+    - sudo apt-get -y update
+    - echo "-Installing nodejs-"
+    - sudo apt-get -y install nodejs 
+ 
+  PostInstall:
+    - echo "---PostInstall---"
+
+  PreStart:
+    #- echo "$PATH" 
+    #- which aws
+    # Check to see if aws cli is installed
+    - if which aws >/dev/null; then
+    -   echo "--AWS CLI exists--"
+    - else
+    -   echo "--Installing AWS CLI--"
+    #   Check to see if unzip is installed
+    -   if which unzip >/dev/null; then
+    -     echo "--Unzip exists--"
+    -   else
+    -     echo "--Installing unzip--"
+    -     sudo apt-get -y install unzip
+    -   fi
+    -   curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+    -   unzip awscli-bundle.zip
+    -   sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+    - fi
+    #- ./deregister-elb.sh
+    - echo "Deregistered with the ELB. Waiting 1 minute"
+    - sleep 60
+ 
+  Exec:
+    - nodejs app.js 
+     
+  PostStart:
+    #- ./register-elb.sh
+    - publicip=$(curl -s ident.me) || true
+    - 'echo "You can validate the install by pointing your browser at http://$publicip:$PORT"'
+
+
