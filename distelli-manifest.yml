@@ -1,4 +1,4 @@
-bmcgehee2/example-jenkins:
+bmcgehee2/example-jenkins: 
   # Distelli Manifest example 
   
   PreBuild: 
