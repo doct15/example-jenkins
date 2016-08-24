@@ -5,9 +5,9 @@ bmcgehee2/example-jenkins:
     # Add any build pre-requisites here
     #- echo "---PreBuild---"
     
-  #CommitData:
-    #- RepoType: Git   
-    #- RepoPath: .
+  CommitData:
+    - RepoType: Git   
+    - RepoPath: .
 
   Build:
     # Built and tested with Jenkins
