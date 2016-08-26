@@ -68,8 +68,8 @@ bmcgehee/example-jenkins:
     -   sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
     - fi
     #- ./deregister-elb.sh
-    - echo "Deregistered with the ELB. Waiting 1 minute"
-    - sleep 60
+    #- echo "Deregistered with the ELB. Waiting 1 minute"
+    #- sleep 60
  
   Exec:
     - nodejs app.js 
