@@ -6,7 +6,7 @@ bmcgehee/example-jenkins:
     #- echo "---PreBuild---"
     
   CommitData:
-    - RepoType: Git   
+    - RepoType: Git
     - RepoPath: .
 
   Build:
